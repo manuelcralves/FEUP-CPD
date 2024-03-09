@@ -16,10 +16,17 @@ For this study we will approach the problem, **product of two matrices** in diff
 The fundamental multiplication algorithm in linear algebra generates a matrix C from two matrices A and B. This process involves multiplying the elements of the ith row in matrix A with the corresponding elements of the jth column in matrix B and summing these products.
 
 **PseudoCode:**
+```
+For each row i in the matrix A
+    For each column j in the matrix B
+        For each element k in the row i of A
+            Multiply k by the elements of j
+            Add the product to the corresponding element in the result matrix C[i][j]
+```
 
 #### C++
 
-| **BASIC   MULTIPLICATION** 	| **Time(s)** 	| **L1 DCM**  	| **L2 DCM**  	|
+| **Size** 	| **Time(s)** 	| **L1 DCM**  	| **L2 DCM**  	|
 |----------------------------	|-------------	|-------------	|-------------	|
 | 600x600                    	| 0.193       	| 244747545   	| 39978950    	|
 | 1000x1000                  	| 1.196       	| 1215313152  	| 248319156   	|
@@ -31,7 +38,7 @@ The fundamental multiplication algorithm in linear algebra generates a matrix C 
 
 #### JAVA
 
-| **BASIC   MULTIPLICATION** 	| **Time(s)** 	|
+| **Size** 	| **Time(s)** 	|
 |----------------------------	|-------------	|
 | 600x600                    	| 0.277       	|
 | 1000x1000                  	| 3.553       	|
@@ -46,10 +53,17 @@ The fundamental multiplication algorithm in linear algebra generates a matrix C 
 The row multiplication method is a modified version of the standard multiplication technique, in which elements from the ith row of matrix A are multiplied by matching elements from the jth row of matrix B, with the results being compiled in the corresponding position of matrix C.
 
 **PseudoCode:**
+```
+For each row i in the matrix A
+    For each element j in row i
+        For each line k in matrix b
+            Multiply j by the elements of k
+            Add the product to the corresponding element in the result matrix C[i][k]
+```
 
 #### C++
 
-| **LINE   MULTIPLICATION** 	| **Time(s)** 	| **L1 DCM** 	| **L2 DCM** 	|
+| **Size** 	| **Time(s)** 	| **L1 DCM** 	| **L2 DCM** 	|
 |---------------------------	|-------------	|------------	|------------	|
 | 600x600                   	| 0.106       	| 27111173   	| 58059476   	|
 | 1000x1000                 	| 0.495       	| 125642250  	| 260780188  	|
@@ -61,7 +75,7 @@ The row multiplication method is a modified version of the standard multiplicati
 
 #### JAVA
 
-| **LINE   MULTIPLICATION** 	| **Time(s)** 	|
+| **Size** 	| **Time(s)** 	|
 |---------------------------	|-------------	|
 | 600x600                   	| 0.115       	|
 | 1000x1000                 	| 0.510        	|
@@ -76,6 +90,17 @@ The row multiplication method is a modified version of the standard multiplicati
 Block multiplication is an algorithm that segments matrices A and B into smaller blocks, leveraging row multiplication to compute the values for matrix C efficiently.
 
 **PseudoCode:**
+
+```
+For each block row i in matrix A
+    For each block column j in matrix B
+        For each block k in both matrix A and matrix B
+            For each row l in the block i of matrix A and block k of matrix B
+                For each column m in the block k of matrix A and block j of matrix B 
+                    For each element n in the block j of matrix B
+                        Multiply the elements A[l][m] and B[m][n] 
+                        Add the product to the corresponding element in the result matrix C[l][n]
+```
 
 #### Block Size: 128
 
