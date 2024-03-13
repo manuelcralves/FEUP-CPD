@@ -4,6 +4,7 @@
 #include <time.h>
 #include <cstdlib>
 #include <papi.h>
+#include <omp.h>
 #include <string.h>
 
 using namespace std;
@@ -42,14 +43,16 @@ void OnMult(int m_ar, int m_br)
 
     Time1 = clock();
 
+	#pragma omp parallel private(i, j, k)
 	for(i=0; i<m_ar; i++)
 	{	for( j=0; j<m_br; j++)
 		{	temp = 0;
+			#pragma omp for
 			for( k=0; k<m_ar; k++)
-			{	
-				temp += pha[i*m_ar+k] * phb[k*m_br+j];
-			}
-			phc[i*m_ar+j]=temp;
+				{	
+					temp += pha[i*m_ar+k] * phb[k*m_br+j];
+				}
+				phc[i*m_ar+j]=temp;
 		}
 	}
 
