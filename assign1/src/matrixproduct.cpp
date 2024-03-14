@@ -15,8 +15,6 @@ using namespace std;
 void OnMult(int m_ar, int m_br) 
 {
 	
-	SYSTEMTIME Time1, Time2;
-	
 	char st[100];
 	double temp;
 	int i, j, k;
@@ -41,7 +39,7 @@ void OnMult(int m_ar, int m_br)
 
 
 
-    Time1 = clock();
+    double Time1 = omp_get_wtime();
 
 	#pragma omp parallel private(i, j, k)
 	for(i=0; i<m_ar; i++)
@@ -57,7 +55,7 @@ void OnMult(int m_ar, int m_br)
 	}
 
 
-    Time2 = clock();
+    double Time2 = omp_get_wtime();
 	sprintf(st, "Time: %3.3f seconds\n", (double)(Time2 - Time1) / CLOCKS_PER_SEC);
 	cout << st;
 
