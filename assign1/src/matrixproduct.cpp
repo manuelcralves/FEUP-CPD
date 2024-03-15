@@ -174,7 +174,7 @@ void OnMultLine2(int m_ar, int m_br)
 	}
 
     double Time2 = omp_get_wtime();
-	sprintf(st, "Time: %3.3f ", (double)(Time2 - Time1) / CLOCKS_PER_SEC);
+	sprintf(st, "Time: %3.3f ", (double)(Time2 - Time1));
 	cout << st;
 
     // display 10 elements of the result matrix tto verify correctness
@@ -311,7 +311,7 @@ int main (int argc, char *argv[])
 		cout << endl << "1. Multiplication" << endl;
 		cout << "2. Line Multiplication" << endl;
 		cout << "3. Block Multiplication" << endl;
-		cout << "4. Line mult 2" << endl;
+		cout << "4. Paralel Line Multiplication" << endl;
 		cout << "Selection?: ";
 		cin >>op;
 		if (op == 0)
