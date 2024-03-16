@@ -78,9 +78,9 @@ public class App {
         Time1 = System.nanoTime();
 
         for (i = 0; i < m_ar;i++){
-            for (j = 0; j < m_br;j++){
-                for (k = 0; k < m_ar;k++){
-                    phc[i][k] += pha[i][j] * phb[j][k];
+            for (k = 0; k < m_br;k++){
+                for (j = 0; j < m_ar;j++){
+                    phc[i][j] += pha[i][k] * phb[k][j];
                 }
             }
         }

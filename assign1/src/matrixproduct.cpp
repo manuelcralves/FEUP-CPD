@@ -106,11 +106,11 @@ void OnMultLine(int m_ar, int m_br)
 
 
 	for(i=0; i<m_ar; i++)
-	{	for(j=0; j<m_br; j++)
+	{	for(k=0; k<m_br; k++)
 		{
-			for(k=0; k<m_ar; k++)
+			for(j=0; j<m_ar; j++)
 			{	
-				phc[i*m_ar+k] += pha[i*m_ar+j] * phb[j*m_br+k];
+				phc[i*m_ar+j] += pha[i*m_ar+k] * phb[k*m_br+j];
 			}
 		}
 	}
@@ -163,12 +163,12 @@ void OnMultLine2(int m_ar, int m_br)
 
 	#pragma omp parallel private(i, j, k)
 	for(i=0; i<m_ar; i++)
-	{	for(j=0; j<m_br; j++)
+	{	for(k=0; k<m_br; k++)
 		{
 			#pragma omp for
-			for(k=0; k<m_ar; k++)
+			for(j=0; j<m_ar; j++)
 			{	
-				phc[i*m_ar+k] += pha[i*m_ar+j] * phb[j*m_br+k];
+				phc[i*m_ar+j] += pha[i*m_ar+k] * phb[k*m_br+j];
 			}
 		}
 	}
