@@ -2,9 +2,8 @@
 
 ## **Performance evaluation of a single core**
 
-In this project, we will study the effect on the processor performance of the memory hierarchy when
-accessing large amounts of data. The product of two matrices will be used for this study. Use the
-Performance API (PAPI) to collect relevant performance indicators of the program execution.
+In this project, we studied the effect on the processor performance of the memory hierarchy when
+accessing large amounts of data. The product of two matrices will be used for this study.
 
 ### **Algorithms explanation and Performance metrics**
 
@@ -56,9 +55,9 @@ For each row i in the matrix A
 
 ##### Comparison
 
-![Basic Multiplication (C++)](image.png)
+![Basic Multiplication (C++)](assign1/screenshots/image.png)
 
-![Basic Multiplication Time](image-1.png)
+![Basic Multiplication Time](assign1/screenshots/image-1.png)
 
 ##### Analysis
 We can observe a predictable rise in the time taken as the matrix size increases. Similarly, the occurrences of data cache misses align with this trend, indicating that larger matrices lead to more frequent memory accesses (with L2 DCM increasing faster than the L1 DCM). Also, we can observe that Java takes more time than C++ because of differences in compilation, memory management, and optimization, with C++ offering lower overhead and more control over low-level optimizations.
@@ -102,11 +101,11 @@ For each row i in the matrix A
 
 ##### Comparison
 
-![Line Multiplication (C++)](image-2.png)
+![Line Multiplication (C++)](assign1/screenshots/image-2.png)
 
-![Line Multiplication Time](image-3.png)
+![Line Multiplication Time](assign1/screenshots/image-3.png)
 
-![Line vs Basic](image-8.png)
+![Line vs Basic](assign1/screenshots/image-8.png)
 
 ##### Analysis
 
@@ -139,7 +138,7 @@ For each block row i in matrix A
 | 8192     	| 268.534     	| 77838387177 	| 2.56855E+11 	|
 | 10240    	| 577.762     	| 1.51963E+11 	| 5.01128E+11 	|
 
-![Block 128](image-4.png)
+![Block 128](assign1/screenshots/image-4.png)
 
 ##### Block Size: 256
 
@@ -150,7 +149,7 @@ For each block row i in matrix A
 | 8192     	| 390.608     	| 73036003266 	| 1.58385E+11 	|
 | 10240    	| 497.023     	| 1.4183E+11  	| 3.44638E+11 	|
 
-![Block 256](image-5.png)
+![Block 256](assign1/screenshots/image-5.png)
 
 ##### Block Size: 512
 
@@ -161,13 +160,13 @@ For each block row i in matrix A
 | 8192     	| 329.561     	| 70347816557 	| 1.34401E+11 	|
 | 10240    	| 433.028     	| 1.36924E+11 	| 3.02231E+11 	|
 
-![Block 512](image-6.png)
+![Block 512](assign1/screenshots/image-6.png)
 
 ##### Comparison
 
-![DCM Blocks Comparison](image-7.png)
+![DCM Blocks Comparison](assign1/screenshots/image-7.png)
 
-![Block Time Comparison](image-9.png)
+![Block Time Comparison](assign1/screenshots/image-9.png)
 
 ##### Analysis
 
@@ -187,7 +186,7 @@ To ensure reliability, we're also conducting 5 trials as before, and changing th
 
 ### **Algorithms**
 
-![Algorithms](image-10.png)
+![Algorithms](assign1/screenshots/image-10.png)
 
 #### Results
 
@@ -225,13 +224,13 @@ To ensure reliability, we're also conducting 5 trials as before, and changing th
 
 #### Comparison
 
-![Different Line Multiplications](image-11.png)
+![Different Line Multiplications](assign1/screenshots/image-11.png)
 
-![DCM First](image-12.png)
+![DCM First](assign1/screenshots/image-12.png)
 
-![DCM Second](image-13.png)
+![DCM Second](assign1/screenshots/image-13.png)
 
-![Speedup](image-14.png)
+![Speedup](assign1/screenshots/image-14.png)
 
 #### Analysis
 
