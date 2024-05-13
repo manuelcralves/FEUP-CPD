@@ -24,7 +24,7 @@ public class Server {
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
 
-            while (rounds < 5) {
+            while (rounds < 3) {
 
                 writer.println("continue");
  

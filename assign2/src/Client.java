@@ -30,15 +30,8 @@ public class Client {
                     running = false;
                 }
                 else{
-                    //writer.println("new Date()?".toString());
-
-                    // Instance of random class
                     Random rand = new Random(); 
-                    // Setting the upper bound to generate the
-                    // random numbers in specific range
-                    int upperbound = 11;
-                    // Generating random values from 0 - 11
-                    // using nextInt()
+                    int upperbound = 6;
                     int int_random = rand.nextInt(upperbound); 
 
                     System.out.println(int_random);
