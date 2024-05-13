@@ -8,50 +8,53 @@ import java.util.Random;
  * @author www.codejava.net
  */
 public class Client {
+
     private static final String SERVER_HOST = "localhost";
     private static final int SERVER_PORT = 8888;
  
     public static void main(String[] args) {
  
-        try (Socket socket = new Socket(SERVER_HOST, SERVER_PORT)) {
+        String hostname = SERVER_HOST;
+        int port = SERVER_PORT;
+ 
+        try (Socket socket = new Socket(hostname, port)) {
             
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
 
-            int points = 0;
-            boolean running = true;
-            while(running){
+            System.out.println(reader.readLine());
 
-                String continue_connection = reader.readLine();
+            if(reader.readLine().equals("Game is starting")){
 
-                if ("stop".equals(continue_connection)){
-                    running = false;
-                }
-                else{
-                    Random rand = new Random(); 
-                    int upperbound = 6;
-                    int int_random = rand.nextInt(upperbound); 
+                int points = 0;
+                boolean running = true;
+                while(running){
 
-                    System.out.println(int_random);
+                    String continue_connection = reader.readLine();
 
-                    writer.println(int_random);
-        
-                    String result = reader.readLine();
-        
-                    System.out.println(result);
+                    if ("stop".equals(continue_connection)){
+                        running = false;
+                    }
+                    else{
+                        Random rand = new Random(); 
+                        int upperbound = 10;
+                        int int_random = rand.nextInt(upperbound); 
 
-                    if("You won".equals(result)){
-                        points++;
+                        System.out.println(int_random);
+
+                        writer.println(int_random);
+            
+                        String result = reader.readLine();
+            
+                        System.out.println(result);
                     }
                 }
             }
-            writer.println(points);
-            System.out.print("You got a total of ");
-            System.out.print(points);
-            System.out.println(" points.");
- 
+            else
+                System.out.print("Game couldn't start");
+    
         } catch (UnknownHostException ex) {
  
             System.out.println("Server not found: " + ex.getMessage());
