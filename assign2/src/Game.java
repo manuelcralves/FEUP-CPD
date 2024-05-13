@@ -1,15 +1,8 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.*;
 
 public class Game {
 
@@ -53,8 +46,8 @@ public class Game {
         }
 
         if (winnerId != -1)
-            System.out.println("Client " + winnerId + " is the winner!");
-        else 
+            System.out.println("Client " + winnerId + " is the winner with " + highestPoints + " points!");
+        else
             System.out.println("No winner found.");
     }
 
@@ -62,6 +55,7 @@ public class Game {
         private Socket socket;
         private int clientId;
         private int[] points;
+        private Lock lock = new ReentrantLock();
 
         public ClientHandler(Socket socket, int clientId) {
             this.socket = socket;
@@ -72,30 +66,35 @@ public class Game {
         @Override
         public void run() {
             try (InputStream input = socket.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                OutputStream output = socket.getOutputStream();
-                PrintWriter writer = new PrintWriter(output, true)) {
-                
+                 BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+                 OutputStream output = socket.getOutputStream();
+                 PrintWriter writer = new PrintWriter(output, true)) {
+
                 for (int round = 0; round < 3; round++) {
                     writer.println("continue");
                     String number = reader.readLine();
-                    int int_number = Integer.parseInt(number);
-                    this.points[round] = int_number;
-                    System.out.println("Client " + clientId + " rolled " + int_number);
+
+                    try {
+                        int int_number = Integer.parseInt(number);
+                        setPoints(round, int_number);
+                        System.out.println("Client " + clientId + " rolled " + int_number);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid number received from client " + clientId);
+                        setPoints(round, 0); // Default to 0 or handle appropriately
+                    }
 
                     Thread.sleep(1000);
 
                     writer.println("Result");
-                    
+
                     Thread.sleep(1000);
                 }
-                
+
                 writer.println("stop");
 
                 writer.println("Client Points");
                 System.out.println("Client " + clientId + " finished with " + this.getTotalPoints() + " points.");
 
-                
             } catch (IOException ex) {
                 System.out.println("Server exception: " + ex.getMessage());
                 ex.printStackTrace();
@@ -107,11 +106,36 @@ public class Game {
 
         public int getTotalPoints() {
             int total = 0;
-            for (int round = 0; round < 3; round++)
-                total += this.points[round];
-
+            lock.lock();
+            try {
+                for (int round = 0; round < 3; round++)
+                    total += this.points[round];
+            } finally {
+                lock.unlock();
+            }
             return total;
         }
+
+        public void setPoints(int round, int value) {
+            lock.lock();
+            try {
+                this.points[round] = value;
+            } finally {
+                lock.unlock();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        List<Socket> sockets = new ArrayList<>();
+        try {
+            for (int i = 0; i < 3; i++) {
+                sockets.add(new Socket("localhost", 8888));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Game game = new Game(3, sockets);
+        game.start();
     }
 }
-    
