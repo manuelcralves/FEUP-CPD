@@ -137,7 +137,7 @@ public class GameServer {
             out.println("Game started");
             int round = 1;
 
-            while (round <= 1) {
+            while (round <= 3) {
                 turnLock.lock();
                 try {
                     while (clients.indexOf(this) != currentTurn) {
@@ -162,7 +162,7 @@ public class GameServer {
                         round++;
                     }
 
-                    if (round > 1) {
+                    if (round > 3) {
                         break;
                     }
 
