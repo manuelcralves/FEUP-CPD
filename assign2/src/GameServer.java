@@ -194,6 +194,7 @@ public class GameServer {
         }
 
         private void announceResults() throws IOException {
+           
             broadcast("Game Results:");
             clientLock.lock();
             try {
@@ -201,6 +202,7 @@ public class GameServer {
                     broadcast(client.username + " made " + client.points + " points");
                 }
 
+                
                 ClientHandler winner = clients.get(0);
                 for (ClientHandler client : clients) {
                     if (client.points > winner.points) {
@@ -208,30 +210,36 @@ public class GameServer {
                     }
                 }
                 broadcast("The winner is " + winner.username + " with " + winner.points + " points!");
-
-                disconnectAllClients();
             } finally {
                 clientLock.unlock();
             }
-        }
 
-        private void sendMessage(String message) {
-            out.println(message);
+            
+            disconnectAllClients();
         }
 
         private void disconnectAllClients() {
+            
             clientLock.lock();
             try {
                 for (ClientHandler client : clients) {
                     try {
+                        client.sendMessage("Goodbye..."); 
                         client.socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
+                clients.clear(); 
             } finally {
                 clientLock.unlock();
             }
         }
+
+
+        private void sendMessage(String message) {
+            out.println(message);
+        }
+
     }
 }
