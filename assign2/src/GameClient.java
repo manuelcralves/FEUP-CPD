@@ -34,11 +34,16 @@ public class GameClient {
                 }
                 System.out.println("Server: " + serverMessage);
                 if (serverMessage.equals("Roll the Dice")) {
-                    System.out.println("Press Enter to roll the dice...");
-                    console.readLine(); 
-                    int diceRoll = (int) (Math.random() * 6) + 1; 
-                    out.println(diceRoll);
-                    System.out.println("You rolled a " + diceRoll);
+                    System.out.println("Press Enter to roll the dice or type 'disconnect' to exit...");
+                    String input = console.readLine();
+                    if ("disconnect".equalsIgnoreCase(input)) {
+                        out.println("disconnect");
+                        break;
+                    } else {
+                        int diceRoll = (int) (Math.random() * 6) + 1; 
+                        out.println(diceRoll);
+                        System.out.println("You rolled a " + diceRoll);
+                    }
                 }
             }
         } catch (IOException e) {

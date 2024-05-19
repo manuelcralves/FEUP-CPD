@@ -127,6 +127,13 @@ public class GameServer {
             } finally {
                 try {
                     socket.close();
+                    clientLock.lock();
+                    try {
+                        clients.remove(this);
+                        broadcast(username + " has disconnected.");
+                    } finally {
+                        clientLock.unlock();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -151,6 +158,17 @@ public class GameServer {
 
                     out.println("Roll the Dice");
                     String diceRollStr = in.readLine();
+                    if ("disconnect".equalsIgnoreCase(diceRollStr)) {
+                        socket.close();
+                        clientLock.lock();
+                        try {
+                            clients.remove(this);
+                            broadcast(username + " has disconnected.");
+                        } finally {
+                            clientLock.unlock();
+                        }
+                        return;
+                    }
                     int diceRoll = Integer.parseInt(diceRollStr);
                     points += diceRoll;
                     System.out.println("Player " + username + " rolled a " + diceRoll);
